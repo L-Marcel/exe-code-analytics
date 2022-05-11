@@ -3,6 +3,8 @@ Exe Code Analytics was been created to provide a extensible code analyse to Exe:
 
 I will work to make this lib more efective and extract more information!
 
+Check the playground: [Exe Code Analytics Playground](https://exe-code-analytics-playground.vercel.app)
+
 Targets: JavaScript, TypeScript, Java, and Python
 
 Avaiable extracted informations:
