@@ -72,14 +72,14 @@ describe("Counters class", () => {
     /* A LINE? NO! */
     #LINEEE? NO!
     <!-- LINE? NO! -->
-    
+function() {} () => {} () => {}
     `;
 
     const { classes, methods, lines } = Counters.getAll(content, true);
 
     expect(classes.length).toEqual(1);
-    expect(methods.length).toEqual(3);
-    expect(lines).toEqual(22);
+    expect(methods.length).toEqual(6);
+    expect(lines).toEqual(23);
   });
 
   it("Should be able to get methods of a void file", () => {
