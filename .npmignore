@@ -6,3 +6,4 @@ l-marcel.config.json
 yarn.lock
 
 dist/__tests__
+tsconfig.json
