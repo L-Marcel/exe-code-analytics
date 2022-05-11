@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1652296958118" clover="3.2.0">
-  <project timestamp="1652296958118" name="All files">
-    <metrics statements="139" coveredstatements="139" conditionals="28" coveredconditionals="28" methods="10" coveredmethods="10" elements="177" coveredelements="177" complexity="0" loc="139" ncloc="139" packages="2" files="4" classes="4"/>
+<coverage generated="1652304331777" clover="3.2.0">
+  <project timestamp="1652304331777" name="All files">
+    <metrics statements="143" coveredstatements="143" conditionals="30" coveredconditionals="30" methods="10" coveredmethods="10" elements="183" coveredelements="183" complexity="0" loc="143" ncloc="143" packages="2" files="4" classes="4"/>
     <package name="providers">
-      <metrics statements="129" coveredstatements="129" conditionals="26" coveredconditionals="26" methods="8" coveredmethods="8"/>
+      <metrics statements="133" coveredstatements="133" conditionals="28" coveredconditionals="28" methods="8" coveredmethods="8"/>
       <file name="Analytic.ts" path="C:\exe-code-analytics\src\providers\Analytic.ts">
-        <metrics statements="82" coveredstatements="82" conditionals="8" coveredconditionals="8" methods="3" coveredmethods="3"/>
+        <metrics statements="86" coveredstatements="86" conditionals="8" coveredconditionals="8" methods="3" coveredmethods="3"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -88,9 +88,13 @@
         <line num="80" count="1" type="stmt"/>
         <line num="81" count="1" type="stmt"/>
         <line num="82" count="1" type="stmt"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="85" count="1" type="stmt"/>
+        <line num="86" count="1" type="stmt"/>
       </file>
       <file name="Counters.ts" path="C:\exe-code-analytics\src\providers\Counters.ts">
-        <metrics statements="47" coveredstatements="47" conditionals="18" coveredconditionals="18" methods="5" coveredmethods="5"/>
+        <metrics statements="47" coveredstatements="47" conditionals="20" coveredconditionals="20" methods="5" coveredmethods="5"/>
         <line num="1" count="1" type="stmt"/>
         <line num="2" count="1" type="stmt"/>
         <line num="3" count="1" type="stmt"/>
@@ -108,13 +112,13 @@
         <line num="15" count="4" type="stmt"/>
         <line num="16" count="4" type="cond" truecount="4" falsecount="0"/>
         <line num="17" count="4" type="stmt"/>
-        <line num="18" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="18" count="4" type="cond" truecount="3" falsecount="0"/>
         <line num="19" count="4" type="stmt"/>
         <line num="20" count="1" type="stmt"/>
         <line num="21" count="1" type="cond" truecount="1" falsecount="0"/>
         <line num="22" count="4" type="stmt"/>
         <line num="23" count="4" type="stmt"/>
-        <line num="24" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="24" count="4" type="cond" truecount="3" falsecount="0"/>
         <line num="25" count="4" type="stmt"/>
         <line num="26" count="1" type="stmt"/>
         <line num="27" count="1" type="cond" truecount="1" falsecount="0"/>
