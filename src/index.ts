@@ -1,3 +1,3 @@
-import { Analytic } from "./providers/Analytic";
+export * from "./providers/Analytic";
+export * from "./providers/Counters";
 
-export { Analytic };

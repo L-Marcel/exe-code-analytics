@@ -1,6 +1,6 @@
 import { Counters } from "./Counters";
 
-export type File = {
+type AnalyticFile = {
   path: string;
   content: string;
 
@@ -19,7 +19,7 @@ export type File = {
   };
 };
 
-export type AnalyticOptions = {
+type AnalyticOptions = {
   countMethodsWithSpecialBlocks: boolean;
 };
 
@@ -29,7 +29,7 @@ class Analytic {
   };
 
   constructor(
-    private files: File[], 
+    private files: AnalyticFile[], 
     options?: AnalyticOptions
   ) {
     this.options = {
@@ -59,7 +59,7 @@ class Analytic {
           all: count.classes
         },
         content: f.content
-      } as File;
+      } as AnalyticFile;
     });
   };
 
@@ -75,8 +75,13 @@ class Analytic {
       };
 
       return prev;
-    }, [] as File[]);
+    }, [] as AnalyticFile[]);
   };
 };
 
-export { Analytic };
+export {
+  Analytic,
+  AnalyticOptions,
+  AnalyticFile
+};
+
