@@ -12,7 +12,7 @@ class Counters {
 
   static getMethods(text: string, withSpecialBlocks = false) {
     //check in: regexr.com/6let0
-    const blocks = text.match(/(?!(\n|=| ))(protected |abstract |private |public |static |async |function |final |native |synchronized |transient | )*[\S]* *([\S]|<([\s\w\d:,<>=\[\]\{\}])*>)* *\n*\([\s\w\d:,<>=\[\]\{\}.]*(\)[\s=>]*(?=(\{|:)))/g);
+    const blocks = text.match(/(?!(\n|=| |\}|;|\{))(protected |abstract |private |public |static |async |function |final |native |synchronized |transient | )*[\S]* *([\S]|<([\s\w\d:,<>=\[\]\{\}])*>)* *\n*\([\s\w\d:,<>=\[\]\{\}.]*(\)([\s])*(=>)?([\s])*(?=(\{|:)))/g);
     const methods = withSpecialBlocks? blocks:this.removeSpecialBlocks((blocks? blocks:[]));
    
     return (methods? methods:[]).map(m => m.trimEnd());
