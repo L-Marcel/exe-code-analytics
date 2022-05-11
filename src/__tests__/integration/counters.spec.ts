@@ -36,7 +36,7 @@ describe("Counters class", () => {
 
     expect(classes.length).toEqual(1);
     expect(methods.length).toEqual(1);
-    expect(lines).toEqual(23);
+    expect(lines).toEqual(22);
   });
 
   it("Should be able to get methods and special blocks in code", () => {
@@ -79,7 +79,7 @@ describe("Counters class", () => {
 
     expect(classes.length).toEqual(1);
     expect(methods.length).toEqual(3);
-    expect(lines).toEqual(23);
+    expect(lines).toEqual(22);
   });
 
   it("Should be able to get methods of a void file", () => {

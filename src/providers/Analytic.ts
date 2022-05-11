@@ -8,10 +8,15 @@ export type File = {
   complexity?: number;
   churn?: number;
 
-  count?: {
-    methods?: number;
-    classes?: number;
-  }
+  methods?: {
+    count: number;
+    all: string[];
+  };
+
+  classes?: {
+    count: number;
+    all: string[];
+  };
 };
 
 export type AnalyticOptions = {
@@ -45,9 +50,13 @@ class Analytic {
         ...f,
         complexity: 0,
         sloc: count.lines,
-        count: {
-          methods: count.methods.length,
-          classes: count.classes.length
+        methods: {
+          count: count.methods.length,
+          all: count.methods
+        },
+        classes: {
+          count: count.classes.length,
+          all: count.classes
         },
         content: f.content
       } as File;
@@ -59,7 +68,6 @@ class Analytic {
       const identicFileIndex = prev.findIndex(p => p.path === cur.path);
 
       if(identicFileIndex >= 0) {
-        //Typescript problems
         let lastValue = prev[identicFileIndex].churn ?? 0;
         prev[identicFileIndex].churn = lastValue + 1;
       } else {

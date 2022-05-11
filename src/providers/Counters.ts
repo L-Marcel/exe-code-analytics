@@ -11,20 +11,23 @@ class Counters {
   };
 
   static getMethods(text: string, withSpecialBlocks = false) {
-    const blocks = text.match(/(?!(\n|=| ))((protected |abstract |private |public |static |async |function |final |native |synchronized |transient | )?)*(([\S]?)* *)?([\S]? *)*\n*\(([\sA-z0-1_=<>&|$#/\\%\-_+^~?*!@"'`{},:.);[\]]?)*(\)([\sA-z0-1_=<>&|$#/\\%\-_+^~?*!@"'`,:.);[\]]?)*\{)/g);
+    //check in: regexr.com/6let0
+    const blocks = text.match(/(?!(\n|=| ))(protected |abstract |private |public |static |async |function |final |native |synchronized |transient | )*[\S]* *([\S]|<([\s\w\d:,<>=\[\]\{\}])*>)* *\n*\([\s\w\d:,<>=\[\]\{\}.]*(\)[\s=>]*(?=(\{|:)))/g);
     const methods = withSpecialBlocks? blocks:this.removeSpecialBlocks((blocks? blocks:[]));
    
-    return (methods? methods:[]).map(m => m + " ... }");
+    return methods? methods:[]
   };
 
   static getClasses(text: string) {
-    const classes = text.match(/(?!(\n| ))((protected |abstract |private |public |final | )?)*(class ([\S]*) *)(extends ([\S]*) *)?((implements *([\S]* *(, *)?)*)?)*\{/g);
-    return (classes? classes:[]).map(m => m + " ... }");
+    //check in: regexr.com/6lf47
+    const classes = text.match(/(?!(\n| ))(protected |abstract |private |public |final | )*(class ([\S]{1,}) *)(extends ([\S]{1,}) *)?(implements *([\S]{1,} *(, *)?){1,})?(?=(\{|:))/g);
+    return classes? classes:[];
   };
 
   static removeSpecialBlocks(blocks: string[]) {
     return blocks.filter(b => {
-      const special = b.match(/(?!(\n|=| ))((if|else|else(\n| )*if|elif|while|for|switch|try|catch|finally) *)\n*(?=\()/g);
+      //check in: regexr.com/6lf55
+      const special = b.match(/(?!(\n|=| ))((if|else|else(\n| )*if|elif|while|for|switch|try|catch|finally) *)\n*(?=(\(|{|(\S{1,}:)))/g);
 
       if(Array.isArray(special)) {
         return false;
@@ -35,8 +38,9 @@ class Counters {
   };
 
   static getLines(text: string) {
-    const lines = text.match(/[\S]{1,}(?=\n)/g);
-    return lines? lines.length+1:0;
+    //check in: regexr.com/6lf69
+    const lines = text.match(/([\S]{1,}( |	)*){1,}(?=\n)?/g);
+    return lines? lines.length:0;
   };
 };
 
