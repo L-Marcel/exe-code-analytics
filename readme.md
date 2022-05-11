@@ -8,7 +8,7 @@ I will work to make this lib more efective and extract more information!
 - [x] Churn //Not coveraged
 - [x] Methods
 - [x] Classes
-- [] Complexity //In work
+- [ ] Complexity //In work
 
 ## Installation
 ```bash
