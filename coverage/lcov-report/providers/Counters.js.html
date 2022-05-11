@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for providers/Counters.ts</title>
+    <title>Code coverage report for providers/Counters.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../prettify.css" />
     <link rel="stylesheet" href="../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../index.html">All files</a> / <a href="index.html">providers</a> Counters.ts</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">providers</a> Counters.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>43/43</span>
+                <span class='fraction'>44/44</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>20/20</span>
+                <span class='fraction'>22/22</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>5/5</span>
+                <span class='fraction'>6/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>43/43</span>
+                <span class='fraction'>44/44</span>
             </div>
         
             
@@ -106,10 +106,13 @@
 <a name='L41'></a><a href='#L41'>41</a>
 <a name='L42'></a><a href='#L42'>42</a>
 <a name='L43'></a><a href='#L43'>43</a>
-<a name='L44'></a><a href='#L44'>44</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L44'></a><a href='#L44'>44</a>
+<a name='L45'></a><a href='#L45'>45</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -119,7 +122,6 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -134,7 +136,6 @@
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">3x</span>
-<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -149,49 +150,51 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { removeCommments } from "../util/removeComments";
-&nbsp;
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.Counters = void 0;
+const removeComments_1 = require("../util/removeComments");
 class Counters {
-  static getAll(text: string, withSpecialBlocks = false) {
-    const content = removeCommments(text);
-    return {
-      lines: this.getLines(content),
-      methods: this.getMethods(content, withSpecialBlocks),
-      classes: this.getClasses(content)
-    };
-  };
-&nbsp;
-  static getMethods(text: string, withSpecialBlocks = false) {
-    const blocks = text.match(/(?!(\n|=| ))((protected |abstract |private |public |static |async |function |final |native |synchronized |transient | )?)*(([\S]?)* *)?([\S]? *)*\n*\(([\sA-z0-1_=&lt;&gt;&amp;|$#/\\%\-_+^~?*!@"'`{},:.);[\]]?)*(\)([\sA-z0-1_=&lt;&gt;&amp;|$#/\\%\-_+^~?*!@"'`,:.);[\]]?)*\{)/g);
-    const methods = withSpecialBlocks? blocks:this.removeSpecialBlocks((blocks? blocks:[]));
-   
-    return (methods? methods:[]).map(m =&gt; m + " ... }");
-  };
-&nbsp;
-  static getClasses(text: string) {
-    const classes = text.match(/(?!(\n| ))((protected |abstract |private |public |final | )?)*(class ([\S]*) *)(extends ([\S]*) *)?((implements *([\S]* *(, *)?)*)?)*\{/g);
-    return (classes? classes:[]).map(m =&gt; m + " ... }");
-  };
-&nbsp;
-  static removeSpecialBlocks(blocks: string[]) {
-    return blocks.filter(b =&gt; {
-      const special = b.match(/(?!(\n|=| ))((if|else|else(\n| )*if|elif|while|for|switch|try|catch|finally) *)\n*(?=\()/g);
-&nbsp;
-      if(Array.isArray(special)) {
-        return false;
-      };
-&nbsp;
-      return true;
-    });
-  };
-&nbsp;
-  static getLines(text: string) {
-    const lines = text.match(/[\S]{1,}(?=\n)/g);
-    return lines? lines.length+1:0;
-  };
-};
-&nbsp;
-export { Counters };
+    static getAll(text, withSpecialBlocks = false) {
+        const content = (0, removeComments_1.removeCommments)(text);
+        return {
+            lines: this.getLines(content),
+            methods: this.getMethods(content, withSpecialBlocks),
+            classes: this.getClasses(content)
+        };
+    }
+    ;
+    static getMethods(text, withSpecialBlocks = false) {
+        const blocks = text.match(/(?!(\n|=| ))((protected |abstract |private |public |static |async |function |final |native |synchronized |transient | )?)*(([\S]?)* *)?([\S]? *)*\n*\(([\sA-z0-1_=&lt;&gt;&amp;|$#/\\%\-_+^~?*!@"'`{},:.);[\]]?)*(\)([\sA-z0-1_=&lt;&gt;&amp;|$#/\\%\-_+^~?*!@"'`,:.);[\]]?)*\{)/g);
+        const methods = withSpecialBlocks ? blocks : this.removeSpecialBlocks((blocks ? blocks : []));
+        return (methods ? methods : []).map(m =&gt; m + " ... }");
+    }
+    ;
+    static getClasses(text) {
+        const classes = text.match(/(?!(\n| ))((protected |abstract |private |public |final | )?)*(class ([\S]*) *)(extends ([\S]*) *)?((implements *([\S]* *(, *)?)*)?)*\{/g);
+        return (classes ? classes : []).map(m =&gt; m + " ... }");
+    }
+    ;
+    static removeSpecialBlocks(blocks) {
+        return blocks.filter(b =&gt; {
+            const special = b.match(/(?!(\n|=| ))((if|else|else(\n| )*if|elif|while|for|switch|try|catch|finally) *)\n*(?=\()/g);
+            if (Array.isArray(special)) {
+                return false;
+            }
+            ;
+            return true;
+        });
+    }
+    ;
+    static getLines(text) {
+        const lines = text.match(/[\S]{1,}(?=\n*)/g);
+        return lines ? lines.length : 0;
+    }
+    ;
+}
+exports.Counters = Counters;
+;
 &nbsp;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
@@ -199,7 +202,7 @@ export { Counters };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Wed May 11 2022 02:28:01 GMT-0300 (Horário Padrão de Brasília)
+                at Wed May 11 2022 02:20:14 GMT-0300 (Horário Padrão de Brasília)
             </div>
         <script src="../prettify.js"></script>
         <script>
