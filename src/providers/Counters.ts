@@ -35,7 +35,7 @@ class Counters {
   };
 
   static getLines(text: string) {
-    const lines = text.match(/[\S]{1,}(?=\n)/g);
+    const lines = text.match(/[\S]{1,}(?=\n*)/g);
     return lines? lines.length:0;
   };
 };
