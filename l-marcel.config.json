@@ -1,0 +1,10 @@
+{
+  "name": "Exe: Code Analytics",
+  "translatedDescription": "Bibliteca para analizar e avaliar códigos a partir de uma string.",
+  "technologies": [
+    "Node.js",
+    "JavaScript",
+    "TypeScript",
+    "Jest"
+  ]
+}
