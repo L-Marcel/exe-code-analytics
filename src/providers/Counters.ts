@@ -15,13 +15,13 @@ class Counters {
     const blocks = text.match(/(?!(\n|=| |\}|;|\{))(protected |abstract |private |public |static |async |function |final |native |synchronized |transient | )*[\S]* *([\w=]|<([\s\w\d:,<>=\[\]\{\}])*>)* *\n*\([\s\w\d:,<>=\[\]\{\}.]*(\)([\s])*(=>)?([\s])*(?=(\{|:)))/g);
     const methods = withSpecialBlocks? blocks:this.removeSpecialBlocks((blocks? blocks:[]));
    
-    return (methods? methods:[]).map(m => m.trimEnd());
+    return (methods? methods:[]).map(m => m.trimEnd().trimStart());
   };
 
   static getClasses(text: string) {
     //check in: regexr.com/6lf47
     const classes = text.match(/(?!(\n| ))(protected |abstract |private |public |final | )*(class ([\S]{1,}) *)(extends ([\S]{1,}) *)?(implements *([\S]{1,} *(, *)?){1,})?(?=(\{|:))/g);
-    return (classes? classes:[]).map(c => c.trimEnd());
+    return (classes? classes:[]).map(c => c.trimEnd().trimStart());
   };
 
   static removeSpecialBlocks(blocks: string[]) {
