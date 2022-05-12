@@ -35,7 +35,7 @@ JavaScript, TypeScript, Java, and Python
 
 ## Regex patterns
 
-- [Get Methods](regexr.com/6let0)
-  - [Get Special Blocks](regexr.com/6lf55)
-- [Get Classes](regexr.com/6lf47)
-- [Get Lines](regexr.com/6lf69)
+- [Get Methods](https://regexr.com/6let0)
+  - [Get Special Blocks](https://regexr.com/6lf55)
+- [Get Classes](https://regexr.com/6lf47)
+- [Get Lines](https://regexr.com/6lf69)
