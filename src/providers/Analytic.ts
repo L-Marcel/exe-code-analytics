@@ -1,4 +1,5 @@
-import { Counters } from "./Counters";
+import { Complexity } from "./Complexity";
+import { Scan } from "./Scan";
 
 type AnalyticFile = {
   path: string;
@@ -41,14 +42,12 @@ class Analytic {
   execute() {
     const files = this.getChurn();
 
-    console.warn("Complexity analytic is not avaliable!");
-
     return files.map(f => {
-      const count = Counters.getAll(f.content, this.options.countMethodsWithSpecialBlocks);
+      const count = Scan.getAll(f.content, this.options.countMethodsWithSpecialBlocks);
 
       return {
         ...f,
-        complexity: 0,
+        complexity: Complexity.count(f.content),
         sloc: count.lines,
         methods: {
           count: count.methods.length,
@@ -71,6 +70,7 @@ class Analytic {
         let lastValue = prev[identicFileIndex].churn ?? 0;
         prev[identicFileIndex].churn = lastValue + 1;
       } else {
+        cur.churn = 0;
         prev.push(cur);
       };
 

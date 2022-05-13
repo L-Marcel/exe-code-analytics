@@ -1,6 +1,6 @@
 import { removeCommments } from "../util/removeComments";
 
-class Counters {
+class Scan {
   static getAll(text: string, withSpecialBlocks = false) {
     const content = removeCommments(text);
     return {
@@ -24,6 +24,12 @@ class Counters {
     return (classes? classes:[]).map(c => c.trimEnd().trimStart());
   };
 
+  static getSpecialBlocks(text: string) {
+    //check in: regexr.com/6lf55
+    const specials = text.match(/(?!(\n|=| ))((if|else|else(\n| )*if|elif|while|for|switch|try|catch|finally) *)\n*(?=(\(|{|(\S{1,}:)))/g);
+    return (specials? specials:[]).map(s => s.trimEnd().trimStart());
+  };
+
   static removeSpecialBlocks(blocks: string[]) {
     return blocks.filter(b => {
       //check in: regexr.com/6lf55
@@ -44,4 +50,4 @@ class Counters {
   };
 };
 
-export { Counters };
+export { Scan };

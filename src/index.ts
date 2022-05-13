@@ -1,3 +1,2 @@
 export * from "./providers/Analytic";
-export * from "./providers/Counters";
-
+export * from "./providers/Scan";
