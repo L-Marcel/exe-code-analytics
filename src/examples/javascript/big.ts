@@ -67,7 +67,7 @@ class Complexity {
   
 
   static getBlock(text: string) {
-    const block = text.match(/(	| |\n|^|(?!\{)){1,}(if|elif|while|for|switch) *\n*\({1,}(?!{)/g);
+    const block = text.match("");
     
     if(block) {
       return {
@@ -81,8 +81,8 @@ class Complexity {
   };
 
   static countSwitchCases(text: string): number {
-    const cases = text.match(/(	| |\n|\{){1,}(case|default( |\n)*:)(?![\w\d:,!<>=\[\]\{\}.])(\s*(\"|\`|\'))?/g);
-    const breaks = text.match(/(	| |\n|\{){1,}(break|return)(?![\w\d:,!<>=\[\]\{\}.])(\s*;)?/g);
+    const cases = text.match("");
+    const breaks = text.match("");
     const count = Math.min(((cases? cases:[]).length, (breaks? breaks:[]).length));
 
     return count;
@@ -98,46 +98,16 @@ class Complexity {
     return 0;
   };
 
-  static removeStringsAndRegexsSpace(text: string) {
-    const withOutDoubleQuotes = this.removeBlockOfStringSpace(text, "\"");
-    const withOutSingleQuote = this.removeBlockOfStringSpace(withOutDoubleQuotes, "'");
-    const withOutGraveAccent = this.removeBlockOfStringSpace(withOutSingleQuote, "`");
-    const withOutRegexBar = this.removeBlockOfStringSpace(withOutGraveAccent, "\/");
-
-    return withOutRegexBar;
-  };
-
-  static removeBlockOfStringSpace(text: string, key: string) {
-    return [ ...text ].reduce((prev, cur) => {
-      switch(cur) {
-        case key:
-          prev.isInside = !prev.isInside;
-          prev.result += cur;
-        default:
-          break;
-      };
-
-      if(!prev.isInside && cur !== key) {
-        prev.result += cur;
-      };
-
-      return prev;
-    }, {
-      result: "",
-      isInside: false
-    }).result;
-  };
-
   static removeInvalidBlocks(text: string) {
-    const data = [ ...text ].reduce((prev, cur) => {
+    const data = [ ...text ].reduce((prev, cur, i) => {
       let isFinishedNow = false;
 
       switch(cur) {
-        case "{":
+        case "":
           prev.starts++;
           prev.isStarted = true;
           break;
-        case "}":
+        case "":
           prev.ends++;
           break;
         default:
@@ -161,7 +131,7 @@ class Complexity {
           prev.outside += cur;
         } else if(
           !prev.outsideIsFinished && prev.isFinished && 
-          (cur !== "}" || prev.starts >= prev.ends)
+          (cur !== "" || prev.starts >= prev.ends)
         ) {
           prev.outside += cur;
         };
@@ -171,9 +141,9 @@ class Complexity {
 
       if(
         prev.isStarted && (
-        (prev.starts === 1 && cur !== "{") || 
+        (prev.starts === 1 && cur !== "") || 
         (prev.starts === prev.ends ||
-        (prev.starts === prev.ends + 1 && cur !== "}")) &&
+        (prev.starts === prev.ends + 1 && cur !== "")) &&
         (!prev.isFinished || isFinishedNow))
       ) {
         prev.onlyFirstBlockContent += cur;

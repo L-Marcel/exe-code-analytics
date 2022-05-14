@@ -1,19 +1,24 @@
 import { removeCommments } from "../util/removeComments";
+import { Complexity } from "./Complexity";
 
 class Scan {
-  static getAll(text: string, withSpecialBlocks = false) {
+  static getAll(text: string) {
     const content = removeCommments(text);
+    const classes = this.getClasses(content);
+    const methods = this.getMethods(content);
+
     return {
       lines: this.getLines(content),
-      methods: this.getMethods(content, withSpecialBlocks),
-      classes: this.getClasses(content)
+      methods,
+      classes,
+      complexity: Complexity.calc(text).complexity
     };
   };
 
-  static getMethods(text: string, withSpecialBlocks = false) {
+  static getMethods(text: string) {
     //check in: regexr.com/6let0
     const blocks = text.match(/(?!(\n|=| |\}|;|\{))(protected |abstract |private |public |static |async |function |final |native |synchronized |transient | )*[\S]* *([\w=]|<([\s\w\d:,<>=\[\]\{\}])*>)* *\n*\([\s\w\d:,<>=\[\]\{\}.]*(\)([\s])*(=>)?([\s])*(?=(\{|:)))/g);
-    const methods = withSpecialBlocks? blocks:this.removeSpecialBlocks((blocks? blocks:[]));
+    const methods = this.removeSpecialBlocks((blocks? blocks:[]));
    
     return (methods? methods:[]).map(m => m.trimEnd().trimStart());
   };

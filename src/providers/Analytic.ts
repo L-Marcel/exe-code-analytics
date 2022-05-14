@@ -1,4 +1,3 @@
-import { Complexity } from "./Complexity";
 import { Scan } from "./Scan";
 
 type AnalyticFile = {
@@ -20,34 +19,20 @@ type AnalyticFile = {
   };
 };
 
-type AnalyticOptions = {
-  countMethodsWithSpecialBlocks: boolean;
-};
-
 class Analytic {
-  private options: AnalyticOptions = {
-    countMethodsWithSpecialBlocks: false
-  };
-
   constructor(
-    private files: AnalyticFile[], 
-    options?: AnalyticOptions
-  ) {
-    this.options = {
-      countMethodsWithSpecialBlocks: false,
-      ...options
-    };
-  };
+    private files: AnalyticFile[]
+  ) {};
   
   execute() {
     const files = this.getChurn();
 
     return files.map(f => {
-      const count = Scan.getAll(f.content, this.options.countMethodsWithSpecialBlocks);
+      const count = Scan.getAll(f.content);
 
       return {
         ...f,
-        complexity: Complexity.count(f.content),
+        complexity: count.complexity,
         sloc: count.lines,
         methods: {
           count: count.methods.length,
@@ -81,7 +66,6 @@ class Analytic {
 
 export {
   Analytic,
-  AnalyticOptions,
   AnalyticFile
 };
 
