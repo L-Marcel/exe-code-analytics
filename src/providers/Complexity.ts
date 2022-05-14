@@ -5,6 +5,8 @@ class Complexity {
     let complexity = initial;
 
     if(text !== '') {
+      //const content = this.removeStringsAndRegexsSpace(text);
+
       const { inside, outside, nodes: nodesInBlock } = this.getBlockContent(text);
       complexity += nodesInBlock;
 
@@ -64,7 +66,6 @@ class Complexity {
       nodes: this.getBlockValue(block[0].trimStart().trimEnd(), onlyFirstBlockContent)
     };
   };
-  
 
   static getBlock(text: string) {
     const block = text.match(/(	| |\n|^|(?!\{)){1,}(if|elif|while|for|switch) *\n*\({1,}(?!{)/g);
@@ -99,33 +100,41 @@ class Complexity {
   };
 
   static removeStringsAndRegexsSpace(text: string) {
-    const withOutDoubleQuotes = this.removeBlockOfStringSpace(text, "\"");
-    const withOutSingleQuote = this.removeBlockOfStringSpace(withOutDoubleQuotes, "'");
-    const withOutGraveAccent = this.removeBlockOfStringSpace(withOutSingleQuote, "`");
+    const content = text.replace(/(\\\')|(\\\")|(\\\/)|(\\\`)|("( |.)*(\\\")*['`\/](\\\")*( |.)*")|(\/( |.)*(\\\\)*['"`](\\\\)*\/)|(\'( |.)*(\\\')*[`"\/](\\\')*\')/g, "");
+    const withOutGraveAccent = this.removeBlockOfStringSpace(content, "`");
     const withOutRegexBar = this.removeBlockOfStringSpace(withOutGraveAccent, "\/");
+    const withOutDoubleQuotes = this.removeBlockOfStringSpace(withOutRegexBar, "\"");
+    const withOutSingleQuote = this.removeBlockOfStringSpace(withOutDoubleQuotes, "'");
 
-    return withOutRegexBar;
+    return withOutSingleQuote;
   };
 
   static removeBlockOfStringSpace(text: string, key: string) {
-    return [ ...text ].reduce((prev, cur) => {
-      switch(cur) {
-        case key:
-          prev.isInside = !prev.isInside;
-          prev.result += cur;
-        default:
-          break;
+    const data = [ ...text ].reduce((prev, cur) => {
+      if(cur === key) {
+        prev.isInside = !prev.isInside;
+        prev.result += cur;
+        prev.rest = "";
       };
 
       if(!prev.isInside && cur !== key) {
         prev.result += cur;
+      } else if(prev.isInside && cur !== key) {
+        prev.rest += cur;
       };
 
       return prev;
     }, {
       result: "",
+      rest: "",
       isInside: false
-    }).result;
+    });
+
+    if(data.isInside) {
+      data.result += data.rest;
+    };
+
+    return data.result;
   };
 
   static removeInvalidBlocks(text: string) {

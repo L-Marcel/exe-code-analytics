@@ -14,7 +14,8 @@ describe("Complexity", () => {
       const helloMessage = "hello";
       const hello = \`say "\$\{helloMessage\}"\`;
       const helloRegex = /hello/g;
-      const helloAgain = 'Hello!';
+      const helloAgain = 'Hello!'';
+      \"
 
       const matchedHello = hello.match(helloRegex) + \`\$\{helloAgain\}\`;
     `);
@@ -23,7 +24,8 @@ describe("Complexity", () => {
       const helloMessage = "";
       const hello = \`\`;
       const helloRegex = //g;
-      const helloAgain = '';
+      const helloAgain = ''';
+      \"
 
       const matchedHello = hello.match(helloRegex) + \`\`;
     `);
@@ -35,10 +37,14 @@ describe("Complexity", () => {
     writeLog(simpleAnalytics, "[@complexity-calc] simple");
     expect(simpleAnalytics.complexity).toEqual(3);
 
+
     const big = await tests.get("big.ts");
     const bigAnalytics = Complexity.calc(big.content);
+
+    writeLog(bigAnalytics.rest ?? "", "ferrou.txt")
+
     writeLog(bigAnalytics, "[@complexity-calc] big");
-    expect(bigAnalytics.complexity).toEqual(19);
+    expect(bigAnalytics.complexity).toEqual(18);
   });
 
   it("Should be able to get if block", async() => {

@@ -5,7 +5,9 @@ class Complexity {
     let complexity = initial;
 
     if(text !== '') {
-      const { inside, outside, nodes: nodesInBlock } = this.getBlockContent(text);
+      const content = this.removeStringsAndRegexsSpace(text);
+
+      const { inside, outside, nodes: nodesInBlock } = this.getBlockContent(content);
       complexity += nodesInBlock;
 
       if(inside !== '') {
@@ -64,10 +66,9 @@ class Complexity {
       nodes: this.getBlockValue(block[0].trimStart().trimEnd(), onlyFirstBlockContent)
     };
   };
-  
 
   static getBlock(text: string) {
-    const block = text.match("");
+    const block = text.match(/(	| |\n|^|(?!\{)){1,}(if|elif|while|for|switch) *\n*\({1,}(?!{)/g);
     
     if(block) {
       return {
@@ -81,8 +82,8 @@ class Complexity {
   };
 
   static countSwitchCases(text: string): number {
-    const cases = text.match("");
-    const breaks = text.match("");
+    const cases = text.match(/(	| |\n|\{){1,}(case|default( |\n)*:)(?![\w\d:,!<>=\[\]\{\}.])(\s*(\"|\`|\'))?/g);
+    const breaks = text.match(/(	| |\n|\{){1,}(break|return)(?![\w\d:,!<>=\[\]\{\}.])(\s*;)?/g);
     const count = Math.min(((cases? cases:[]).length, (breaks? breaks:[]).length));
 
     return count;
@@ -98,16 +99,57 @@ class Complexity {
     return 0;
   };
 
+  static removeStringsAndRegexsSpace(text: string) {
+    const withOutRegexBar = this.removeBlockOfStringSpace(text, "\/");
+    const withOutDoubleQuotes = this.removeBlockOfStringSpace(withOutRegexBar, "\"");
+    const withOutSingleQuote = this.removeBlockOfStringSpace(withOutDoubleQuotes, "'");
+    const withOutGraveAccent = this.removeBlockOfStringSpace(withOutSingleQuote, "`");
+    
+
+    return withOutRegexBar;
+  };
+
+  static removeBlockOfStringSpace(text: string, key: string) {
+    const data = [ ...text ].reduce((prev, cur) => {
+      switch(cur) {
+        case key:
+          prev.isInside = !prev.isInside;
+          prev.result += cur;
+          prev.rest = "";
+        default:
+          break;
+      };
+
+      if(!prev.isInside && cur !== key) {
+        prev.result += cur;
+      } else if(prev.isInside && cur !== key) {
+        prev.rest += cur;
+      };
+
+      return prev;
+    }, {
+      result: "",
+      rest: "",
+      isInside: false
+    });
+
+    if(data.isInside) {
+      data.result += data.rest;
+    };
+
+    return data.result;
+  };
+
   static removeInvalidBlocks(text: string) {
-    const data = [ ...text ].reduce((prev, cur, i) => {
+    const data = [ ...text ].reduce((prev, cur) => {
       let isFinishedNow = false;
 
       switch(cur) {
-        case "":
+        case "{":
           prev.starts++;
           prev.isStarted = true;
           break;
-        case "":
+        case "}":
           prev.ends++;
           break;
         default:
@@ -131,7 +173,7 @@ class Complexity {
           prev.outside += cur;
         } else if(
           !prev.outsideIsFinished && prev.isFinished && 
-          (cur !== "" || prev.starts >= prev.ends)
+          (cur !== "}" || prev.starts >= prev.ends)
         ) {
           prev.outside += cur;
         };
@@ -141,9 +183,9 @@ class Complexity {
 
       if(
         prev.isStarted && (
-        (prev.starts === 1 && cur !== "") || 
+        (prev.starts === 1 && cur !== "{") || 
         (prev.starts === prev.ends ||
-        (prev.starts === prev.ends + 1 && cur !== "")) &&
+        (prev.starts === prev.ends + 1 && cur !== "}")) &&
         (!prev.isFinished || isFinishedNow))
       ) {
         prev.onlyFirstBlockContent += cur;
