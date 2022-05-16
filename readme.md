@@ -3,12 +3,17 @@ Exe Code Analytics was been created to provide a extensible code analyse to Exe:
 
 I will work to make this lib more efective and extract more information!
 
+## Warning
+Current Exe Code Analytics features are enough for Exe: Classwork, so I will return to Exe: Classwork development. 
+
+In the future I want to improve more features and support for this library.
+
 ### Avaiable extracted informations
 
-- [x] Churn //Not coveraged
-- [x] Methods
-- [x] Classes
-- [ ] Complexity //In work
+- [x] Churn;
+- [x] Methods;
+- [x] Classes;
+- [x] Complexity (unavaliable in Python).
 
 ## Installation
 ```bash

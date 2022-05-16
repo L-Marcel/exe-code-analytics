@@ -1,5 +1,3 @@
-//https://softwareengineering.stackexchange.com/questions/189222/are-exceptions-as-control-flow-considered-a-serious-antipattern-if-so-why/189225#189225
-
 class Complexity {
   private static getLog = false;
   
@@ -122,7 +120,6 @@ class Complexity {
 
     return withOutSingleQuote;
   };
-
 
   static removeBlockOfStringSpace(text: string, key: string, secondaryKey?: string) {
     const data = [ ...text ].reduce((prev, cur) => {
