@@ -1,6 +1,5 @@
 import { Complexity } from "../../providers/Complexity";
 import { Tests } from "../../providers/Tests";
-import { writeLog } from "../../util/writeLog";
 
 const tests = new Tests();
 
@@ -32,28 +31,28 @@ describe("Complexity", () => {
   });
 
   it("Should be able to get complexity", async() => {
-    const simple = await tests.get("if.ts");
-    const simpleAnalytics = Complexity.calc(simple.content);
-    writeLog(simpleAnalytics, "[@complexity-calc] simple");
-    expect(simpleAnalytics.complexity).toEqual(3);
+    const _if = await tests.get("if.ts");
+    const _ifAnalytics = Complexity.calc(_if.content);
+    expect(_ifAnalytics.complexity).toEqual(3);
+
+    const _switch = await tests.get("switch.ts");
+    const switchAnalytics = Complexity.calc(_switch.content);
+    expect(switchAnalytics.complexity).toEqual(4);
+
+    const small = await tests.get("small.ts");
+    const smallAnalytics = Complexity.calc(small.content);
+    expect(smallAnalytics.complexity).toEqual(10);
 
 
     const big = await tests.get("big.ts");
     const bigAnalytics = Complexity.calc(big.content);
-
-    writeLog(bigAnalytics.rest ?? "", "ferrou.txt")
-
-    writeLog(bigAnalytics, "[@complexity-calc] big");
-    expect(bigAnalytics.complexity).toEqual(18);
+    expect(bigAnalytics.complexity).toEqual(22);
   });
 
   it("Should be able to get if block", async() => {
     const file = await tests.get("if.ts");
-
     const analytics = Complexity.removeInvalidBlocks(file.content);
 
-    writeLog(analytics, "[@complexity] if-block");
-    
     expect(analytics.inside).toEqual('{\n' +
     '  if(name === "first" && expected) {\n' +
     '    if(expected(name)) {\n' +
@@ -68,7 +67,7 @@ describe("Complexity", () => {
     '\n\nexport default null;');
 
     expect(analytics.onlyFirstBlockContent).toEqual('{\n' +
-    '  if(name === "first" && expected) ;\n' +
+    '  if(name === "first" && expected) ;\n  ;\n' +
     '\n' +
     '  return false;\n' +
     '}');
@@ -78,8 +77,6 @@ describe("Complexity", () => {
     const file = await tests.get("switch.ts");
 
     const analytics = Complexity.removeInvalidBlocks(file.content);
-
-    writeLog(analytics, "[@complexity] switch-block");
     
     expect(analytics.inside).toEqual('{\n' +
     '  switch (name) {\n' +
@@ -109,8 +106,6 @@ describe("Complexity", () => {
     const file = await tests.get("else-if.ts");
 
     const analytics = Complexity.removeInvalidBlocks(file.content);
-
-    writeLog(analytics, "[@complexity] else-if-block");
     
     expect(analytics);
 

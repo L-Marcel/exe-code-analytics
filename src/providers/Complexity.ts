@@ -1,13 +1,20 @@
 //https://softwareengineering.stackexchange.com/questions/189222/are-exceptions-as-control-flow-considered-a-serious-antipattern-if-so-why/189225#189225
 
 class Complexity {
+  private static getLog = false;
+  
+  static toggleLog() {
+    this.getLog = !this.getLog;
+  };
+
   static calc(text: string, initial = 1) {
     let complexity = initial;
 
     if(text !== '') {
-      //const content = this.removeStringsAndRegexsSpace(text);
+      const content = this.removeStringsAndRegexsSpace(text);
 
-      const { inside, outside, nodes: nodesInBlock } = this.getBlockContent(text);
+      const { inside, outside, nodes: nodesInBlock } = this.getBlockContent(content);
+
       complexity += nodesInBlock;
 
       if(inside !== '') {
@@ -46,24 +53,27 @@ class Complexity {
     };
 
     const blockPieces = text.split(block[0]);
+
     const blockPiece = blockPieces.reduce((prev, cur, i) => {
       if(i > 0 || blockPieces.length === 1) {
         prev += cur;
-     
-        if(block.length > i && blockPieces.length > 2) {
-          prev += block[i];
+
+        if(block.length > i && blockPieces.length - 1 > i) {
+          prev += block[0];
         };
       };
 
       return prev;
     }, "");
+    
 
     const { inside, outside, onlyFirstBlockContent } = this.removeInvalidBlocks(blockPiece);
+    const nodes = this.getBlockValue(block[0].trimStart().trimEnd(), onlyFirstBlockContent);
 
     return {
       inside,
       outside,
-      nodes: this.getBlockValue(block[0].trimStart().trimEnd(), onlyFirstBlockContent)
+      nodes 
     };
   };
 
@@ -82,17 +92,21 @@ class Complexity {
   };
 
   static countSwitchCases(text: string): number {
-    const cases = text.match(/(	| |\n|\{){1,}(case|default( |\n)*:)(?![\w\d:,!<>=\[\]\{\}.])(\s*(\"|\`|\'))?/g);
-    const breaks = text.match(/(	| |\n|\{){1,}(break|return)(?![\w\d:,!<>=\[\]\{\}.])(\s*;)?/g);
+    const { onlyFirstBlockContent } = this.removeInvalidBlocks(text);
+    
+    const cases = onlyFirstBlockContent.match(/(	| |\n|\{){1,}(case|default( |\n)*:)(?![\w\d:,!<>=\[\]\{\}.])(\s*(\"|\`|\'))?/g);
+    const breaks = onlyFirstBlockContent.match(/(	| |\n|\{){1,}(break|return)(?![\w\d:,!<>=\[\]\{\}.])(\s*;)?/g);
     const count = Math.min(((cases? cases:[]).length, (breaks? breaks:[]).length));
 
     return count;
   };
 
   static getBlockValue(block: string, text: string): number {
-    if(block.startsWith("if") || block.startsWith("elif")) {
+    const isValid = text.includes("{") && text.includes("}");
+
+    if((block.startsWith("if") || block.startsWith("elif")) && isValid) {
       return 1;
-    } else if(block.startsWith("switch")) {
+    } else if(block.startsWith("switch") && isValid) {
       return this.countSwitchCases(text);
     };
 
@@ -100,7 +114,7 @@ class Complexity {
   };
 
   static removeStringsAndRegexsSpace(text: string) {
-    const content = text.replace(/(\\\')|(\\\")|(\\\/)|(\\\`)|("( |.)*(\\\")*['`\/](\\\")*( |.)*")|(\/( |.)*(\\\\)*['"`](\\\\)*\/)|(\'( |.)*(\\\')*[`"\/](\\\')*\')/g, "");
+    const content = text.replace(/(\\\')|(\\\")|(\\\/)|(\\\`)|(\\\()|(\\\))|("( |.)*(\\\")*['`\/](\\\")*( |.)*")|(\/( |.)*(\\\\)*['"`](\\\\)*\/)|(\'( |.)*(\\\')*[`"\/](\\\')*\')/g, "");
     const withOutGraveAccent = this.removeBlockOfStringSpace(content, "`");
     const withOutRegexBar = this.removeBlockOfStringSpace(withOutGraveAccent, "\/");
     const withOutDoubleQuotes = this.removeBlockOfStringSpace(withOutRegexBar, "\"");
@@ -109,17 +123,18 @@ class Complexity {
     return withOutSingleQuote;
   };
 
-  static removeBlockOfStringSpace(text: string, key: string) {
+
+  static removeBlockOfStringSpace(text: string, key: string, secondaryKey?: string) {
     const data = [ ...text ].reduce((prev, cur) => {
-      if(cur === key) {
+      if(cur === key || (secondaryKey && cur === secondaryKey)) {
         prev.isInside = !prev.isInside;
         prev.result += cur;
         prev.rest = "";
       };
 
-      if(!prev.isInside && cur !== key) {
+      if(!prev.isInside && cur !== key && cur !== secondaryKey) {
         prev.result += cur;
-      } else if(prev.isInside && cur !== key) {
+      } else if(prev.isInside && cur !== key && cur !== secondaryKey) {
         prev.rest += cur;
       };
 
@@ -139,18 +154,31 @@ class Complexity {
 
   static removeInvalidBlocks(text: string) {
     const data = [ ...text ].reduce((prev, cur) => {
-      let isFinishedNow = false;
-
       switch(cur) {
         case "{":
           prev.starts++;
+
+          if(!prev.isStarted) {
+            prev.matchFirstBlock = true;
+          } else {
+            prev.matchFirstBlock = false;
+          };
+
           prev.isStarted = true;
           break;
         case "}":
           prev.ends++;
+          prev.matchFirstBlock = true;
           break;
         default:
           break;
+      };
+
+      if(
+        prev.matchFirstBlock &&
+        cur !== "}" && !prev.isFinished
+      ) {
+        prev.onlyFirstBlockContent += cur;
       };
 
       if(
@@ -159,7 +187,7 @@ class Complexity {
       ) {
         prev.inside += cur; 
         prev.isFinished = true;
-        isFinishedNow = true;
+        prev.onlyFirstBlockContent += cur;
         prev.isFinishedIn = prev.ends;
       } else if(prev.isFinished || !prev.isStarted) {
         if(
@@ -178,21 +206,12 @@ class Complexity {
         prev.inside += cur;
       };
 
-      if(
-        prev.isStarted && (
-        (prev.starts === 1 && cur !== "{") || 
-        (prev.starts === prev.ends ||
-        (prev.starts === prev.ends + 1 && cur !== "}")) &&
-        (!prev.isFinished || isFinishedNow))
-      ) {
-        prev.onlyFirstBlockContent += cur;
-      };
-
       return prev;
     }, {
       isStarted: false,
       isFinished: false,
       isFinishedIn: -1,
+      matchFirstBlock: false,
       outsideIsFinished: false,
       starts: 0,
       ends: 0,
@@ -200,7 +219,7 @@ class Complexity {
       outside: "",
       onlyFirstBlockContent: ""
     });
-
+    
     return {
       inside:  data.inside.trimEnd().trimStart(),
       outside: data.outside.trimEnd().trimStart(),

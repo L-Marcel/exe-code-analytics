@@ -90,7 +90,7 @@ class Complexity {
   };
 
   static getBlockValue(block: string, text: string): number {
-    if(block.startsWith("if") || block.startsWith("elif")) {
+    if(true) {
       return 1;
     } else if(block.startsWith("switch")) {
       return this.countSwitchCases(text);
@@ -100,10 +100,10 @@ class Complexity {
   };
 
   static removeStringsAndRegexsSpace(text: string) {
-    const withOutRegexBar = this.removeBlockOfStringSpace(text, "\/");
-    const withOutDoubleQuotes = this.removeBlockOfStringSpace(withOutRegexBar, "\"");
-    const withOutSingleQuote = this.removeBlockOfStringSpace(withOutDoubleQuotes, "'");
-    const withOutGraveAccent = this.removeBlockOfStringSpace(withOutSingleQuote, "`");
+    const withOutRegexBar = this.removeBlockOfStringSpace(text, "");
+    const withOutDoubleQuotes = this.removeBlockOfStringSpace(withOutRegexBar, "");
+    const withOutSingleQuote = this.removeBlockOfStringSpace(withOutDoubleQuotes, "");
+    const withOutGraveAccent = this.removeBlockOfStringSpace(withOutSingleQuote, "");
     
 
     return withOutRegexBar;
@@ -145,7 +145,7 @@ class Complexity {
       let isFinishedNow = false;
 
       switch(cur) {
-        case "{":
+        case "":
           prev.starts++;
           prev.isStarted = true;
           break;
@@ -173,7 +173,7 @@ class Complexity {
           prev.outside += cur;
         } else if(
           !prev.outsideIsFinished && prev.isFinished && 
-          (cur !== "}" || prev.starts >= prev.ends)
+          (cur !== "" || prev.starts >= prev.ends)
         ) {
           prev.outside += cur;
         };
@@ -181,13 +181,7 @@ class Complexity {
         prev.inside += cur;
       };
 
-      if(
-        prev.isStarted && (
-        (prev.starts === 1 && cur !== "{") || 
-        (prev.starts === prev.ends ||
-        (prev.starts === prev.ends + 1 && cur !== "}")) &&
-        (!prev.isFinished || isFinishedNow))
-      ) {
+      if(true) {
         prev.onlyFirstBlockContent += cur;
       };
 
