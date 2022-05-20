@@ -23,12 +23,36 @@ class Analytic<T> {
   constructor(
     private files: (AnalyticFile & T)[]
   ) {};
+
+  fileIsValid(path: string) {
+    if(!path.includes(".")) {
+      return false;
+    };
+
+    const pathPieces = path.split(".");
+    const mime = pathPieces[pathPieces.length - 1];
+
+    switch(mime) {
+      case "java":
+      case "js":
+      case "jsx":
+      case "ts":
+      case "tsx":
+      case "txt":
+      case "html":
+      case "py":
+        return true;
+      default:
+        return false;
+    };
+  };
   
   execute() {
     const files = this.getChurn();
 
     return files.map(f => {
-      const count = Scan.getAll(f.content);
+      const isValid = this.fileIsValid(f.path);
+      const count = isValid? Scan.getAll(f.content):Scan.getBasic(f.content);
 
       return {
         ...f,

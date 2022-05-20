@@ -2,6 +2,17 @@ import { removeCommments } from "../util/removeComments";
 import { Complexity } from "./Complexity";
 
 class Scan {
+  static getBasic(text: string) {
+    const content = removeCommments(text);
+    
+    return {
+      lines: this.getLines(content),
+      methods: [],
+      classes: [],
+      complexity: 0
+    };
+  };
+
   static getAll(text: string) {
     const content = removeCommments(text);
     const classes = this.getClasses(content);
