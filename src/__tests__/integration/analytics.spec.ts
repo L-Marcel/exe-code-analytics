@@ -15,6 +15,6 @@ describe("Complexity", () => {
     const analytics = new Analytic([file, file2]);
     const result = analytics.getChurn();
 
-    expect(result[0].churn).toEqual(1);
+    expect(result[1].churn).toEqual(1);
   });
 });

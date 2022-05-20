@@ -1,6 +1,7 @@
 import { Scan } from "./Scan";
 
 type AnalyticFile = {
+  id?: string;
   path: string;
   content: string;
 
@@ -53,7 +54,9 @@ class Analytic {
 
       if(identicFileIndex >= 0) {
         let lastValue = prev[identicFileIndex].churn ?? 0;
-        prev[identicFileIndex].churn = lastValue + 1;
+        cur.churn = lastValue + 1;
+
+        prev.push(cur);
       } else {
         cur.churn = 0;
         prev.push(cur);
