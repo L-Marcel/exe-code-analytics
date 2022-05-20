@@ -1,6 +1,6 @@
 {
   "name": "@lmarcel/exe-code-analytics",
-  "version": "3.9.5",
+  "version": "3.9.6",
   "main": "dist/index.js",
   "author": "l-marcel",
   "license": "MIT",

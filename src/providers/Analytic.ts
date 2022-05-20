@@ -1,7 +1,6 @@
 import { Scan } from "./Scan";
 
-type AnalyticFile = {
-  id?: string;
+interface AnalyticFile {
   path: string;
   content: string;
 
@@ -20,9 +19,9 @@ type AnalyticFile = {
   };
 };
 
-class Analytic {
+class Analytic<T> {
   constructor(
-    private files: AnalyticFile[]
+    private files: (AnalyticFile & T)[]
   ) {};
   
   execute() {
@@ -44,7 +43,7 @@ class Analytic {
           all: count.classes
         },
         content: f.content
-      } as AnalyticFile;
+      } as AnalyticFile & T;
     });
   };
 
@@ -63,7 +62,7 @@ class Analytic {
       };
 
       return prev;
-    }, [] as AnalyticFile[]);
+    }, [] as (AnalyticFile & T)[]);
   };
 };
 
