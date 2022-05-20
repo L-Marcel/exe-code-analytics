@@ -1,3 +1,4 @@
+
 class Complexity {
   private static getLog = false;
   
@@ -5,23 +6,23 @@ class Complexity {
     this.getLog = !this.getLog;
   };
 
-  static calc(text: string, initial = 1) {
+  static calc(text: string, initial = 1, isFirst = true) {
     let complexity = initial;
 
     if(text !== '') {
-      const content = this.removeStringsAndRegexsSpace(text);
+      const content = isFirst? this.removeStringsAndRegexsSpace(text):text;
 
       const { inside, outside, nodes: nodesInBlock } = this.getBlockContent(content);
-
+      
       complexity += nodesInBlock;
 
       if(inside !== '') {
-        const { complexity: insideNodes } = this.calc(inside, 0);
+        const { complexity: insideNodes } = this.calc(inside, 0, false);
         complexity += insideNodes;
       };
 
       if(outside !== '') {
-        const { complexity: outsideNodes } = this.calc(outside, 0);
+        const { complexity: outsideNodes } = this.calc(outside, 0, false);
         complexity += outsideNodes;
       };
 
@@ -66,6 +67,7 @@ class Complexity {
     
 
     const { inside, outside, onlyFirstBlockContent } = this.removeInvalidBlocks(blockPiece);
+
     const nodes = this.getBlockValue(block[0].trimStart().trimEnd(), onlyFirstBlockContent);
 
     return {

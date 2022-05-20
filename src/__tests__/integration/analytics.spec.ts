@@ -2,10 +2,12 @@ import { Analytic } from "../../providers/Analytic";
 import { Tests } from "../../providers/Tests";
 
 const tests = new Tests();
+const html = new Tests();
 
 describe("Complexity", () => {
   beforeAll(async() => {
     await tests.getFilesToTest("javascript");
+    await html.getFilesToTest("html");
   });
 
   it("Should be able to get churn", async() => {

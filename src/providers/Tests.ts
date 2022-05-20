@@ -1,6 +1,6 @@
 import fs from "node:fs";
 
-type FileType = "javascript";
+type FileType = "javascript" | "html";
 
 class Tests {
   private files: string[] = [];
