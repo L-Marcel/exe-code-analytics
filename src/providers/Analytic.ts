@@ -1,6 +1,6 @@
-import pckg from "../../package.json";
 import { Scan } from "./Scan";
 
+const pckg = require("../../package.json");
 interface AnalyticFile {
   path: string;
   content: string;
