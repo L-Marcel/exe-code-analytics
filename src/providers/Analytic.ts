@@ -1,3 +1,4 @@
+import pckg from "../../package.json";
 import { Scan } from "./Scan";
 
 interface AnalyticFile {
@@ -24,7 +25,11 @@ class Analytic<T> {
     private files: (AnalyticFile & T)[]
   ) {};
 
-  fileIsValid(path: string) {
+  static getVersion() {
+    return pckg.version;
+  };
+
+  static fileIsValid(path: string) {
     if(!path.includes(".")) {
       return false;
     };
@@ -51,7 +56,7 @@ class Analytic<T> {
     const files = this.getChurn();
 
     return files.map(f => {
-      const isValid = this.fileIsValid(f.path);
+      const isValid = Analytic.fileIsValid(f.path);
       const count = isValid? Scan.getAll(f.content):Scan.getBasic(f.content);
 
       return {
