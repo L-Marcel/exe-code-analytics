@@ -73,17 +73,10 @@ class Analytic<T> {
 
   getChurn() {
     return this.files.reduce((prev, cur) => {
-      const identicFileIndex = prev.findIndex(p => p.path === cur.path);
+      const copies = prev.filter(p => p.path === cur.path);
 
-      if(identicFileIndex >= 0) {
-        let lastValue = prev[identicFileIndex].churn ?? 0;
-        cur.churn = lastValue + 1;
-
-        prev.push(cur);
-      } else {
-        cur.churn = 0;
-        prev.push(cur);
-      };
+      cur.churn = copies.length;
+      prev.push(cur);
 
       return prev;
     }, [] as (AnalyticFile & T)[]);
