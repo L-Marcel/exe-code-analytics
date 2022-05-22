@@ -114,7 +114,7 @@ class Complexity {
   };
 
   static removeStringsAndRegexsSpace(text: string) {
-    const content = text.replace(/(\\\')|(\\\")|(\\\/)|(\\\`)|(\\\()|(\\\))|((\")( |[\d\w\S])*(\\\")*['`](\\\")*( |[\d\w\S])*(\"))|((\')( |[\d\w\S])*(\\\')*[`"](\\\')*( |[\d\w\S])*(\'))/g, "");
+    const content = text.replace(/(\\\')|(\\\")|(\\\/)|(\\\`)|(\\\()|(\\\))|((\")( |[\d\w\S])*(\\\")*['`\/](\\\")*( |[\d\w\S])*(\"))|((\')( |[\d\w\S])*(\\\')*[`"\/](\\\')*( |[\d\w\S])*(\'))/g, "");
     const withOutGraveAccent = this.removeBlockOfStringSpace(content, "`");
     const withOutRegexBar = this.removeBlockOfStringSpace(withOutGraveAccent, "\/");
     const withOutDoubleQuotes = this.removeBlockOfStringSpace(withOutRegexBar, "\"");
