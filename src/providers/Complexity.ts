@@ -1,12 +1,11 @@
+export type ComplexityCalcResult = {
+  inside: string;
+  outside: string;
+  complexity: number;
+};
 
 class Complexity {
-  private static getLog = false;
-  
-  static toggleLog() {
-    this.getLog = !this.getLog;
-  };
-
-  static calc(text: string, initial = 1, isFirst = true) {
+  static calc(text: string, initial = 1, isFirst = true): ComplexityCalcResult {
     let complexity = initial;
 
     if(text !== '') {
@@ -35,7 +34,7 @@ class Complexity {
 
     return { 
       inside: '',
-      rest: '',
+      outside: '',
       complexity: 0
     };
   };
@@ -84,7 +83,7 @@ class Complexity {
       return {
         block
       };
-    };
+    };  
 
     return {
       block: ""
@@ -96,6 +95,7 @@ class Complexity {
     
     const cases = onlyFirstBlockContent.match(/(	| |\n|\{){1,}(case|default( |\n)*:)(?![\w\d:,!<>=\[\]\{\}.])(\s*(\"|\`|\'))?/g);
     const breaks = onlyFirstBlockContent.match(/(	| |\n|\{){1,}(break|return)(?![\w\d:,!<>=\[\]\{\}.])(\s*;)?/g);
+    
     const count = Math.min(((cases? cases:[]).length, (breaks? breaks:[]).length));
 
     return count;
@@ -114,7 +114,7 @@ class Complexity {
   };
 
   static removeStringsAndRegexsSpace(text: string) {
-    const content = text.replace(/(\\\')|(\\\")|(\\\/)|(\\\`)|(\\\()|(\\\))|("( |.)*(\\\")*['`\/](\\\")*( |.)*")|(\/( |.)*(\\\\)*['"`](\\\\)*\/)|(\'( |.)*(\\\')*[`"\/](\\\')*\')/g, "");
+    const content = text.replace(/(\\\')|(\\\")|(\\\/)|(\\\`)|(\\\()|(\\\))|((\")( |[\d\w\S])*(\\\")*['`](\\\")*( |[\d\w\S])*(\"))|((\')( |[\d\w\S])*(\\\')*[`"](\\\')*( |[\d\w\S])*(\'))/g, "");
     const withOutGraveAccent = this.removeBlockOfStringSpace(content, "`");
     const withOutRegexBar = this.removeBlockOfStringSpace(withOutGraveAccent, "\/");
     const withOutDoubleQuotes = this.removeBlockOfStringSpace(withOutRegexBar, "\"");

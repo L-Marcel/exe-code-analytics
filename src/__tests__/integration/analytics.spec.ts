@@ -1,4 +1,4 @@
-import { Analytic } from "../../providers/Analytic";
+import { CodeAnalytic } from "../../providers/CodeAnalytic";
 import { Tests } from "../../providers/Tests";
 
 const tests = new Tests();
@@ -15,7 +15,7 @@ describe("Complexity", () => {
     const file2 = await tests.get("if.ts");
     const file3 = await tests.get("if.ts");
 
-    const analytics = new Analytic([file, file2, file3]);
+    const analytics = new CodeAnalytic([file, file2, file3]);
     const result = analytics.getChurn();
 
     expect(result[0].churn).toEqual(0);

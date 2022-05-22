@@ -35,5 +35,4 @@ JavaScript, TypeScript, Java, and Python
 
 - Remove comments;
 - Ignore special blocks;
-- Is not asyncronous;
 - Require just a string.

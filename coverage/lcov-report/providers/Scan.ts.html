@@ -23,9 +23,9 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.98% </span>
+                <span class="strong">37.97% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>20/69</span>
+                <span class='fraction'>30/79</span>
             </div>
         
             
@@ -44,9 +44,9 @@
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">28.98% </span>
+                <span class="strong">37.97% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>20/69</span>
+                <span class='fraction'>30/79</span>
             </div>
         
             
@@ -132,7 +132,27 @@
 <a name='L67'></a><a href='#L67'>67</a>
 <a name='L68'></a><a href='#L68'>68</a>
 <a name='L69'></a><a href='#L69'>69</a>
-<a name='L70'></a><a href='#L70'>70</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<a name='L70'></a><a href='#L70'>70</a>
+<a name='L71'></a><a href='#L71'>71</a>
+<a name='L72'></a><a href='#L72'>72</a>
+<a name='L73'></a><a href='#L73'>73</a>
+<a name='L74'></a><a href='#L74'>74</a>
+<a name='L75'></a><a href='#L75'>75</a>
+<a name='L76'></a><a href='#L76'>76</a>
+<a name='L77'></a><a href='#L77'>77</a>
+<a name='L78'></a><a href='#L78'>78</a>
+<a name='L79'></a><a href='#L79'>79</a>
+<a name='L80'></a><a href='#L80'>80</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
@@ -204,8 +224,18 @@
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import { removeCommments } from "../util/removeComments";
 import { Complexity } from "./Complexity";
 &nbsp;
+export type ScanResult = {
+  lines: number;
+  
+  methods: string[];
+  classes: string[];
+  complexity: number;
+&nbsp;
+  _analyticError?: string;
+};
+&nbsp;
 class Scan {
-  static <span class="fstat-no" title="function not covered" >getBasic(text: string) {</span>
+  static <span class="fstat-no" title="function not covered" >getBasic(text: string): ScanResult {</span>
 <span class="cstat-no" title="statement not covered" >    const content = removeCommments(text);</span>
 <span class="cstat-no" title="statement not covered" >    </span>
 <span class="cstat-no" title="statement not covered" >    return {</span>
@@ -216,7 +246,7 @@ class Scan {
 <span class="cstat-no" title="statement not covered" >    };</span>
 <span class="cstat-no" title="statement not covered" >  };</span>
 &nbsp;
-  static <span class="fstat-no" title="function not covered" >getAll(text: string) {</span>
+  static <span class="fstat-no" title="function not covered" >getAll(text: string): ScanResult {</span>
 <span class="cstat-no" title="statement not covered" >    const content = removeCommments(text);</span>
 <span class="cstat-no" title="statement not covered" >    const classes = this.getClasses(content);</span>
 <span class="cstat-no" title="statement not covered" >    const methods = this.getMethods(content);</span>
@@ -231,7 +261,7 @@ class Scan {
 &nbsp;
   static <span class="fstat-no" title="function not covered" >getMethods(text: string) {</span>
 <span class="cstat-no" title="statement not covered" >    //check in: regexr.com/6let0</span>
-<span class="cstat-no" title="statement not covered" >    const blocks = text.match(/(?!(\n|=| |\}|;|\{))(protected |abstract |private |public |static |async |function |final |native |synchronized |transient | )*[\S]* *([\w=]|&lt;([\s\w\d:,&lt;&gt;=\[\]\{\}])*&gt;)* *\n*\([\s\w\d:,&lt;&gt;=\[\]\{\}.]*(\)([\s])*(=&gt;)?([\s])*(?=(\{|:)))/g);</span>
+<span class="cstat-no" title="statement not covered" >    const blocks = text.match(/(?!(\n|=| |\}|;|\{))(protected |abstract |private |public |static ||function |final |native |synchronized |transient | )*[\S]* *([\w=]|&lt;([\s\w\d:,&lt;&gt;=\[\]\{\}])*&gt;)* *\n*\([\s\w\d:,&lt;&gt;=\[\]\{\}.]*(\)([\s])*(=&gt;)?([\s])*(?=(\{|:)))/g);</span>
 <span class="cstat-no" title="statement not covered" >    const methods = this.removeSpecialBlocks((blocks? blocks:[]));</span>
 <span class="cstat-no" title="statement not covered" >   </span>
 <span class="cstat-no" title="statement not covered" >    return (methods? methods:[]).map(m =&gt; m.trimEnd().trimStart());</span>
@@ -277,7 +307,7 @@ export { Scan };
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at Fri May 20 2022 22:39:33 GMT-0300 (Horário Padrão de Brasília)
+                at Sat May 21 2022 23:29:43 GMT-0300 (Horário Padrão de Brasília)
             </div>
         <script src="../prettify.js"></script>
         <script>

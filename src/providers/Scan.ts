@@ -1,8 +1,18 @@
 import { removeCommments } from "../util/removeComments";
 import { Complexity } from "./Complexity";
 
+export type ScanResult = {
+  lines: number;
+  
+  methods: string[];
+  classes: string[];
+  complexity: number;
+
+  _analyticError?: string;
+};
+
 class Scan {
-  static getBasic(text: string) {
+  static getBasic(text: string): ScanResult {
     const content = removeCommments(text);
     
     return {
@@ -13,7 +23,7 @@ class Scan {
     };
   };
 
-  static getAll(text: string) {
+  static getAll(text: string): ScanResult {
     const content = removeCommments(text);
     const classes = this.getClasses(content);
     const methods = this.getMethods(content);
@@ -28,7 +38,7 @@ class Scan {
 
   static getMethods(text: string) {
     //check in: regexr.com/6let0
-    const blocks = text.match(/(?!(\n|=| |\}|;|\{))(protected |abstract |private |public |static |async |function |final |native |synchronized |transient | )*[\S]* *([\w=]|<([\s\w\d:,<>=\[\]\{\}])*>)* *\n*\([\s\w\d:,<>=\[\]\{\}.]*(\)([\s])*(=>)?([\s])*(?=(\{|:)))/g);
+    const blocks = text.match(/(?!(\n|=| |\}|;|\{))(protected |abstract |private |public |static ||function |final |native |synchronized |transient | )*[\S]* *([\w=]|<([\s\w\d:,<>=\[\]\{\}])*>)* *\n*\([\s\w\d:,<>=\[\]\{\}.]*(\)([\s])*(=>)?([\s])*(?=(\{|:)))/g);
     const methods = this.removeSpecialBlocks((blocks? blocks:[]));
    
     return (methods? methods:[]).map(m => m.trimEnd().trimStart());
