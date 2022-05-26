@@ -1,6 +1,7 @@
 {
   "name": "Exe: Code Analytics",
   "translatedDescription": "Bibliteca para analizar e avaliar códigos a partir de uma string.",
+  "pinned": true,
   "technologies": [
     "Node.js",
     "JavaScript",
