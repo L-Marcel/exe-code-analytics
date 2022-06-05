@@ -2,6 +2,9 @@
   "name": "Exe: Code Analytics",
   "translatedDescription": "Bibliteca para analizar e avaliar códigos a partir de uma string.",
   "pinned": true,
+  "links": {
+    "self": "https://exe-code-analytics-playground.vercel.app"
+  },
   "technologies": [
     "Node.js",
     "JavaScript",
