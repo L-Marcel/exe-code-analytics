@@ -19,9 +19,14 @@
 
 <br/>
 
-<h2>Available <span>extracted</span> informations:</h2>
+<p>You can install running:</p>
+<pre>
+C:\root> <span>npm</span> i @lmarcel/exe-code-analytics
+</pre>
+
+
 <div id="grid"> 
-  <ul>
+  <ul><h2>Available <span>extracted</span> informations:</h2>
     <li id="checked"><p>Churn;</p></li>
     <li id="checked"><p>Methods;</p></li>
     <li id="checked"><p>Classes;</p></li>
@@ -29,7 +34,3 @@
   </ul>
 </div>
 
-<p>You can install running:</p>
-<pre>
-C:\root> <span>npm</span> i @lmarcel/exe-code-analytics
-</pre>
