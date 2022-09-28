@@ -19,6 +19,11 @@
 
 <br/>
 
+<p>Você pode instalar executando o comando:</p>
+<pre>
+C:\root> <span>npm</span> i @lmarcel/exe-code-analytics
+</pre>
+
 <div id="grid"> 
   <ul><h2>Informações <span>extraídas</span> disponíveis:</h2>
     <li id="checked"><p>Churn;</p></li>
@@ -27,8 +32,3 @@
     <li id="checked"><p>Complexidade (<span>indisponível em Python</span>).</p></li>
   </ul>
 </div>
-
-<p>Você pode instalar executando o comando:</p>
-<pre>
-C:\root> <span>npm</span> i @lmarcel/exe-code-analytics
-</pre>
