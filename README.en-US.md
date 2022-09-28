@@ -1,10 +1,10 @@
 <div valing="top">
   <h1><span>Exe:</span> Code Analytics</h1>
-  <p>Criada para fornecer uma análise de código para a Exe: Classwork.</p>
+  <p>Created to provide a code analysis to Exe: Classwork.</p>
   <nav>
     <div id="repository-buttons"/>
-    <a class="navigation-link disabled" href="https://github.com/L-Marcel/exe-code-analytics/blob/main/README.en-us.md" target="__blank__">
-      en-us
+    <a class="navigation-link disabled" href="https://github.com/L-Marcel/exe-code-analytics/blob/main/README.md" target="__blank__">
+      pt-br
     </a>
     <span class="disabled">•</span>
     <a class="navigation-link" href="https://exe-code-analytics-playground.vercel.app" target="__blank__">
@@ -20,15 +20,15 @@
 <br/>
 
 <div id="grid"> 
-  <ul><h2>Informações <span>extraídas</span> disponíveis:</h2>
+  <ul><h2>Available <span>extracted</span> informations:</h2>
     <li id="checked"><p>Churn;</p></li>
-    <li id="checked"><p>Métodos;</p></li>
+    <li id="checked"><p>Methods;</p></li>
     <li id="checked"><p>Classes;</p></li>
-    <li id="checked"><p>Complexidade (<span>indisponível em Python</span>).</p></li>
+    <li id="checked"><p>Complexity (<span>unavailable in Python</span>).</p></li>
   </ul>
 </div>
 
-<p>Você pode instalar executando o comando:</p>
+<p>You can install running:</p>
 <pre>
 C:\root> <span>npm</span> i @lmarcel/exe-code-analytics
 </pre>
