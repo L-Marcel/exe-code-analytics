@@ -24,7 +24,6 @@
 C:\root> <span>npm</span> i @lmarcel/exe-code-analytics
 </pre>
 
-
 <div id="grid"> 
   <div id="grid-item">
     <h2>Available <span>extracted</span> informations:</h2>
