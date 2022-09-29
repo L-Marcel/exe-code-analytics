@@ -26,11 +26,14 @@ C:\root> <span>npm</span> i @lmarcel/exe-code-analytics
 
 
 <div id="grid"> 
-  <ul><h2>Available <span>extracted</span> informations:</h2>
-    <li id="checked"><p>Churn;</p></li>
-    <li id="checked"><p>Methods;</p></li>
-    <li id="checked"><p>Classes;</p></li>
-    <li id="checked"><p>Complexity (<span>unavailable in Python</span>).</p></li>
-  </ul>
+  <div id="grid-item">
+    <h2>Available <span>extracted</span> informations:</h2>
+    <ul>
+      <li id="checked"><p>Churn;</p></li>
+      <li id="checked"><p>Methods;</p></li>
+      <li id="checked"><p>Classes;</p></li>
+      <li id="checked"><p>Complexity (<span>unavailable in Python</span>).</p></li>
+    </ul>
+  </div>
 </div>
 
